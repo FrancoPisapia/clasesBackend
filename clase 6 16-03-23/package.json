@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "moment": "^2.29.4"
+  },
+  "name": "clase-6-16-03-23",
+  "version": "1.0.0",
+  "main": "clase06.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node edad.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
