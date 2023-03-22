@@ -4,13 +4,14 @@
 //     response.end('Hola mundo desde el backend')
 // })
 
-// server.listen(8080,() =>{
-//     console.log('Listening on port 8080')
-// })
+server.listen(8080,() =>{
+    console.log('Listening on port 8080')
+})
 
-const express = require('express');
-
+//const express = require('express');
+import express from 'express'
 const app = express();
+
 
 
 app.get('/saldudo', (req, res) =>{
@@ -56,7 +57,7 @@ const usuarios = [{
     id:'1',
     nombre: 'Juan',
     apellido: 'Pérez',
-    edad: 35,
+    edad: "35",
     correo: 'juan.perez@example.com'
   },
   {
@@ -69,13 +70,13 @@ const usuarios = [{
 
 ];
 
+app.use(express.urlencoded({extended:true}))
 
 
+app.get('/',(req,res) =>{
 
-// app.get('/',(req,res) =>{
-
-//     res.send({usuarios})
-// })
+    res.send({usuarios})
+})
 
 // app.get('/:idUsario',(req,res) =>{
 
@@ -93,7 +94,7 @@ const usuarios = [{
 
 //Para que funcione tengo que comentar el anterior
 
-app.use(express.urlencoded({extended:true}))//Mejora la interpretacioin de datos
+//Mejora la interpretacioin de datos
 
 
 app.get('/ejemploQueries',(req,res) =>{
