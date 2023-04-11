@@ -21,7 +21,8 @@ Swal.fire({
     allowOutsideClick: false
 }).then (result =>{
     user = result.value
-    console.log(user)
+    console.log(user);
+    socket.emit('login', user);
 })
 
 chatBox.addEventListener('keyup',e =>{
@@ -37,7 +38,24 @@ socket.on('messageLogs', data =>{
     let log = document.getElementById('messageLogs');
     let messages ='';
     data.forEach(message =>{
-        messages = messages + `${message.user} dice: ${message.message}`
+        messages = messages + `${message.user} dice: ${message.message} <br>`
     });
-    log.innerHTML = messages
-})
+    log.innerHTML = `${messages}`;
+
+});
+
+socket.on('connect', () => {
+    console.log('Conectado al servidor de sockets');
+});
+
+
+socket.on('userConnected', (user) => {
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'info',
+        title: `El usuario ${user} se ha conectado`,
+        showConfirmButton: false,
+        timer: 3000
+    });
+});

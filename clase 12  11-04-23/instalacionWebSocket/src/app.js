@@ -25,5 +25,17 @@ socketServer.on('connection',socket =>{
     socket.on ('message', data =>{
         messages.push(data);
         socketServer.emit('messageLogs',messages)
-    })
+    });
+
+    socket.on('login', (user) => {
+        console.log(`El usuario ${user} se ha conectado`);
+        socket.user = user;
+        socket.emit('messageLogs', messages);
+        socket.broadcast.emit('userConnected', user);
+    });
+
+    // socket.on('disconnect', () => {
+    //     console.log(`El usuario ${socket.user} se ha desconectado`);
+    // });
+
 })
