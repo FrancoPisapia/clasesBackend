@@ -1,0 +1,115 @@
+Ejemplo primero
+> use baseCRUD
+switched to db baseCRUD
+> db.mascotas.insertMany([
+...   { nombre: "Fido", especie: "perro", edad: 5 },
+...   { nombre: "Mimi", especie: "gato", edad: 3 },
+...   { nombre: "Paco", especie: "perro", edad: 2 }
+... ])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("643ac4267e2c8b733ab67ec7"),
+                ObjectId("643ac4267e2c8b733ab67ec8"),
+                ObjectId("643ac4267e2c8b733ab67ec9")
+        ]
+}
+> db.mascotas.find({ especie: "perro" })
+{ "_id" : ObjectId("643ac4267e2c8b733ab67ec7"), "nombre" : "Fido", "especie" : "perro", "edad" : 5 }
+{ "_id" : ObjectId("643ac4267e2c8b733ab67ec9"), "nombre" : "Paco", "especie" : "perro", "edad" : 2 }
+> db.mascotas.count()
+3
+> db
+baseCRUD
+> db show
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:3
+> show dbs
+admin          0.000GB
+baseCRUD       0.000GB
+colegio        0.000GB
+config         0.000GB
+local          0.000GB
+miPrimeraBase  0.000GB
+
+Primer ejercicio clase
+> use colegio
+switched to db colegio
+> db.estudiantes.insertMany([
+...   {
+...     "nombre": "Juan",
+...     "apellido": "Pérez",
+...     "curso": "Primero",
+...     "edad": 7,
+...     "correo": "juanperez@example.com",
+...     "sexo": "Masculino"
+...   },
+...   {
+...     "nombre": "María",
+...     "apellido": "García",
+...     "curso": "Segundo",
+...     "edad": 8,
+...     "correo": "mariagarcia@example.com",
+...     "sexo": "Femenino"
+...   },
+...   {
+...     "nombre": "Pedro",
+...     "apellido": "Martínez",
+...     "curso": "Tercero",
+...     "edad": 9,
+...     "correo": "pedromartinez@example.com",
+...     "sexo": "Masculino"
+...   },
+...   {
+...     "nombre": "Ana",
+...     "apellido": "Sánchez",
+...     "curso": "Cuarto",
+...     "edad": 10,
+...     "correo": "anasanchez@example.com",
+...     "sexo": "Femenino"
+...   },
+...   {
+...     "nombre": "Luis",
+...     "apellido": "González",
+...     "curso": "Quinto",
+...     "edad": 11,
+...     "correo": "luisgonzalez@example.com",
+...     "sexo": "Masculino"
+...   }
+... ])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("643ac5707e2c8b733ab67eca"),
+                ObjectId("643ac5707e2c8b733ab67ecb"),
+                ObjectId("643ac5707e2c8b733ab67ecc"),
+                ObjectId("643ac5707e2c8b733ab67ecd"),
+                ObjectId("643ac5707e2c8b733ab67ece")
+        ]
+}
+> db.estudiantes.insertOne({
+...   "nombre": "Elena",
+...   "apellido": "Rojas",
+...   "curso": "Sexto"
+... })
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("643ac57f7e2c8b733ab67ecf")
+}
+> db.estudiantes.find()
+{ "_id" : ObjectId("643ac5707e2c8b733ab67eca"), "nombre" : "Juan", "apellido" : "Pérez", "curso" : "Primero", "edad" : 7, "correo" : "juanperez@example.com", "sexo" : "Masculino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ecb"), "nombre" : "María", "apellido" : "García", "curso" : "Segundo", "edad" : 8, "correo" : "mariagarcia@example.com", "sexo" : "Femenino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ecc"), "nombre" : "Pedro", "apellido" : "Martínez", "curso" : "Tercero", "edad" : 9, "correo" : "pedromartinez@example.com", "sexo" : "Masculino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ecd"), "nombre" : "Ana", "apellido" : "Sánchez", "curso" : "Cuarto", "edad" : 10, "correo" : "anasanchez@example.com", "sexo" : "Femenino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ece"), "nombre" : "Luis", "apellido" : "González", "curso" : "Quinto", "edad" : 11, "correo" : "luisgonzalez@example.com", "sexo" : "Masculino" }
+{ "_id" : ObjectId("643ac57f7e2c8b733ab67ecf"), "nombre" : "Elena", "apellido" : "Rojas", "curso" : "Sexto" }
+> db.estudiantes.find({sexo:"Maculino"})
+> db.estudiantes.find({sexo:"Masculino"})
+{ "_id" : ObjectId("643ac5707e2c8b733ab67eca"), "nombre" : "Juan", "apellido" : "Pérez", "curso" : "Primero", "edad" : 7, "correo" : "juanperez@example.com", "sexo" : "Masculino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ecc"), "nombre" : "Pedro", "apellido" : "Martínez", "curso" : "Tercero", "edad" : 9, "correo" : "pedromartinez@example.com", "sexo" : "Masculino" }
+{ "_id" : ObjectId("643ac5707e2c8b733ab67ece"), "nombre" : "Luis", "apellido" : "González", "curso" : "Quinto", "edad" : 11, "correo" : "luisgonzalez@example.com", "sexo" : "Masculino" }
+> db.estudiantes.count()
+6
+> db.estudiantes.count({sexo:"Femenino"})
+2
+>
