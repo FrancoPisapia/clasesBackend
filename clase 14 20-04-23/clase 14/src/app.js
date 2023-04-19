@@ -19,10 +19,11 @@ mongoose.connect('URL', (error)=>{
 const socketServer = new Server (httpserver)
 app.engine('handlebars', handlebars.engine());
 
+app.use(express.json());
 app.set('views',__dirname+'/views');
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname+'/public'))
-app.use('/',userRouters);
+app.use('/api/users',userRouters);
 
 
 
