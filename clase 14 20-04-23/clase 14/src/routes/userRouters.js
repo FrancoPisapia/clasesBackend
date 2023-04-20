@@ -1,5 +1,5 @@
 import express from 'express';
-import { userModel } from '../models/userModels';
+import { userModel } from '../models/userModels.js';
 import e from 'express';
 
 
@@ -21,7 +21,7 @@ router.get ('/',async (req,res)=>{
 
 });
 
-router.post('/',async (rea,res)=>{
+router.post('/',async (req,res)=>{
    //Primero obtenemos los datos ssegún lo definido en schema
    let {first_name,last_name,email} =req.body;
    //Evaluamos existencia de los parámetros

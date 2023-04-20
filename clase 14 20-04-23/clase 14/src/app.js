@@ -9,12 +9,20 @@ const app = express();
 
 const httpserver = app.listen(8080,()=> console.log('Listening on port 8080'))
 
-mongoose.connect('URL', (error)=>{
-    if(error){
-        console.log('Cannot connect to database');
-        process.exit()
-    }
-})
+
+mongoose.connect('mongodb+srv://francopisapia405:uPTbiSDQYTlKc3wm@codercluster.xlmgp1b.mongodb.net/?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Connected to database'))
+  .catch((err) => console.log(`Error connecting to database: ${err}`));
+
+// mongoose.connect('mongodb+srv://francopisapia405:<password>@codercluster.xlmgp1b.mongodb.net/?retryWrites=true&w=majority', (error)=>{
+//     if(error){
+//         console.log('Cannot connect to database');
+//         process.exit()
+//     }
+// })
 
 const socketServer = new Server (httpserver)
 app.engine('handlebars', handlebars.engine());
