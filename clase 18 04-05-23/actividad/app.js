@@ -4,8 +4,7 @@ import __dirname from './utils.js';
 
 import {Server} from 'socket.io';
 import mongoose from "mongoose";
-import { orderModel } from "../src/models/orderModel.js";
-import { userModel } from "./models/usersModel.js";
+
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
@@ -42,31 +41,10 @@ app.use(express.static(__dirname+'/public'));
 // app.use('/api/student',stuentRouter);
 // app.use('/api/courses',coursesRouter);
 
-
-//**********COOKIES *******/
-app.use(cookieParser('CoderS3Cr3Tc0D3'));
-
-app.get('/setCookie',(req,res) =>{
-  res.cookie('CoderCookie', 'Esta es una cookie',{maxAge:10000}).send('Cookie')
-})
-
-app.get('/getCookies',(req,res) =>{
-  res.send(req.cookies)
-})
-
-app.get('/deleteCookie',(req,res)=>{
-  res.clearCookie('CoderCookie').send('Cookie removed')
-});
-
-app.get('/setSignedCookie',(req,res) =>{
-  res.cookie('SignedCookie', 'Esta es una cookie muy poderosa',{maxAge:10000,signed:true}).send('Cookie')
-})  
-
-
 //**** Session ****/
 
 app.use(session({
-  secret: 'secretCoder',
+  secret: 'secretUsers',
   //Resave mantiene la sesión activa, de estar en false está morirá en caso de que exista inactividad
   resave:true,
   //saveUnitialized permite guardar cualquier sesión. De estar en false la sesión no se guardará si está vacio el objeto final
@@ -74,18 +52,31 @@ app.use(session({
 }))
 
 
-app.get('/session',(req,res) =>{
+app.get('/',(req,res) =>{
   //Si existe la sesión aumento el contador
 
+
+  let message = `Te damos la bienvenida`;
+
+  //Verificamos existencia de nombre
+  if(req.session.name){
+    message =`${req.session.name} visitaste la página ${req.session.counter} veces`
+  } else {
+    const name = req.query.name
+    if (name) {
+      req.session.name = name;
+    }
+  }
+  
+  //Verificamos e incrementamos las visitas
   if(req.session.counter){
     req.session.counter++;
-    res.send(`Se ha visitado el sitio ${req.session.counter} veces`)
   } else{
     //Si no hay una sesión se inicializa en 1
-
     req.session.counter =1;
-    res.send('Bienvenido')
   }
+
+  res.send (message)
 });
 
 /* Login con session*/
