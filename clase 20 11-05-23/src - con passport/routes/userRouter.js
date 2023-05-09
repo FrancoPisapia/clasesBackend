@@ -5,6 +5,7 @@ import { createHash, isValidPassword } from '../utils.js';
 import { isValidObjectId } from 'mongoose';
 import session from 'express-session';
 import passport from 'passport'
+import MongoStore from 'connect-mongo'
 
 const app = express();
 const userRouter = express.Router();
@@ -13,7 +14,7 @@ app.use(express.urlencoded({extended:true}))
 
 //*******PASSPORT *********/
 
-userRouter.post('/register', passport.authenticate('register',{failureRedirect:'/failregister'}),async (req,res)=>{
+userRouter.post('/register', passport.authenticate('register',{failureRedirect:'failregister'}),async (req,res)=>{
    res.send({status:'Success', message:'User Registered'})
 });
 
@@ -22,24 +23,37 @@ userRouter.get('/failregister',async (req,res)=>{
    res.send({error:'Failed'})
 })
 
+userRouter.use(session({
+   store: MongoStore.create({
+   mongoUrl:"mongodb+srv://francopisapia405:uPTbiSDQYTlKc3wm@codercluster.xlmgp1b.mongodb.net/?retryWrites=true&w=majority",
+   mongoOptions:{useNewUrlParser:true,useUnifiedTopology:true},
+   ttl:15
+ }),
+ secret:"asd3ñc3okasod",
+ //Resave mantiene la sesión activa, de estar en false está morirá en caso de que exista inactividad
+ resave:false,
+ //saveUnitialized permite guardar cualquier sesión. De estar en false la sesión no se guardará si está vacio el objeto final
+ saveUninitialized:false
+}));
+
 
 //NO ANDA POR EL SESSION
 
-// userRouter.post('/login', passport.authenticate('login',{failureRedirect:'/faillogin'}),async (req,res)=>{
-//    if(!req.user) return res.status(400).send({status:'error', error:'Invalid credentials'});
+userRouter.post('/login', passport.authenticate('login',{failureRedirect:'faillogin'}),async (req,res)=>{
+   if(!req.user) return res.status(400).send({status:'error', error:'Invalid credentials'});
 
-//    req.session.user ={
-//       firts_name : req.user.firts_name,
-//       last_name:req.user.last_name,
-//       email: req.user.email,
-//       gender:req.user.gender,
-//    }
-//    res.send({status:'Succeed', payload: req.session.user});
-// })
+   req.session.user ={
+      firts_name : req.user.firts_name,
+      last_name:req.user.last_name,
+      email: req.user.email,
+      gender:req.user.gender,
+   }
+   res.send({status:'Succeed', payload: req.session.user});
+})
 
-// userRouter.get('/failllogin',(req,res)=>{
-//    res.send({error:'Failed Login'})
-// })
+userRouter.get('/faillogin',(req,res)=>{
+   res.send({error:'Failed Login'})
+})
 
 
 

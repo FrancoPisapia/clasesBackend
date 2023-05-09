@@ -86,20 +86,20 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session())
 
-app.post('/login', passport.authenticate('login',{failureRedirect:'/faillogin'}),async (req,res)=>{
-  if(!req.user) return res.status(400).send({status:'error', error:'Invalid credentials'});
+// app.post('/login', passport.authenticate('login',{failureRedirect:'/faillogin'}),async (req,res)=>{
+//   if(!req.user) return res.status(400).send({status:'error', error:'Invalid credentials'});
 
-  req.session.user ={
-     firts_name : req.user.firts_name,
-     last_name:req.user.last_name,
-     email: req.user.email,
-     gender:req.user.gender,
-  }
-  res.send({status:'Succeed', payload: req.session.user});
-})
+//   req.session.user ={
+//      firts_name : req.user.firts_name,
+//      last_name:req.user.last_name,
+//      email: req.user.email,
+//      gender:req.user.gender,
+//   }
+//   res.send({status:'Succeed', payload: req.session.user});
+// })
 
-app.get('/faillogin',(req,res)=>{
-  res.send({error:'Failed Login'})
-})
+// app.get('/faillogin',(req,res)=>{
+//   res.send({error:'Failed Login'})
+// })
 
 
